@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
+
 
 public class ZomedFOV : MonoBehaviour
 {
@@ -9,14 +9,10 @@ public class ZomedFOV : MonoBehaviour
     [SerializeField] Camera fpsCamera;
     [SerializeField] float zoomedOutFov = 60f;
     [SerializeField] float zoomedInFOV =20f;
-    private float zoomedOutSensitivity ;
-    [SerializeField] float zoomedInSensitivity = 0.75f;
-    RigidbodyFirstPersonController fpsController;
-
     bool zoomedInToggle = false;
-    private void Start() 
+    private void OnDisable() 
     {
-        fpsController = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
+        ZoomOut();
     }
     private void Update() 
     {
@@ -34,18 +30,12 @@ public class ZomedFOV : MonoBehaviour
             }
         }
     }
-
     private void ZoomOut()
     {
         fpsCamera.fieldOfView = zoomedOutFov;
-        fpsController.mouseLook.XSensitivity = zoomedOutSensitivity;
-        fpsController.mouseLook.YSensitivity = zoomedOutSensitivity;
     }
-
     private void ZoomIn()
     {
         fpsCamera.fieldOfView = zoomedInFOV;
-        fpsController.mouseLook.XSensitivity = zoomedInSensitivity;
-        fpsController.mouseLook.YSensitivity = zoomedInSensitivity;
     }
 }

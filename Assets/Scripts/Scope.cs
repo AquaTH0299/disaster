@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine;
 
 public class Scope : MonoBehaviour
@@ -14,14 +13,9 @@ public class Scope : MonoBehaviour
     public Camera fpsCamera;
     public float scopedFOV = 15f;
     private float normalFOV;
-    private float zoomedOutSensitivity;
-    private float zoomedInSensitivity = 0.75f;
-    [SerializeField] RigidbodyFirstPersonController fpsController;
-
-    // Update is called once per frame
-    private void Start() 
+    private void OnDisable() 
     {
-        fpsController = GameObject.Find("Player").GetComponent<RigidbodyFirstPersonController>();
+        OnUnScoped();
     }
     void Update()
     {
@@ -46,8 +40,6 @@ public class Scope : MonoBehaviour
         weaponCamera.SetActive(false);
         normalFOV = fpsCamera.fieldOfView;
         fpsCamera.fieldOfView = scopedFOV;
-        fpsController.mouseLook.XSensitivity = zoomedInSensitivity;
-        fpsController.mouseLook.YSensitivity = zoomedInSensitivity;
         yield return new WaitForSeconds(.15f);
     }
 
@@ -57,7 +49,5 @@ public class Scope : MonoBehaviour
         guiReticle.SetActive(true);
         weaponCamera.SetActive(true);
         fpsCamera.fieldOfView = normalFOV;
-        fpsController.mouseLook.XSensitivity = zoomedOutSensitivity;
-        fpsController.mouseLook.YSensitivity = zoomedOutSensitivity;
     }
 }
